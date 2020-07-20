@@ -1,0 +1,15 @@
+//使用最小堆PriorityQueue，遍历数组维护一个k的最小堆，最后堆顶为第k个最大元素
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>(k);
+        for(int i:nums){
+            if(minHeap.size()<k){
+                minHeap.add(i);
+            }else if(minHeap.peek()<i){
+                minHeap.poll();
+                minHeap.add(i);
+            }
+        }
+        return minHeap.peek();
+    }
+}
