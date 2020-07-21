@@ -1,0 +1,60 @@
+//维护一个最大堆和一个最小堆，加入数据时分情况判断
+class MedianFinder {
+    PriorityQueue<Integer> minHeap;
+    PriorityQueue<Integer> maxHeap;
+    /** initialize your data structure here. */
+    public MedianFinder() {
+        minHeap = new PriorityQueue<Integer>();
+        maxHeap = new PriorityQueue<>(11, new Comparator<Integer>(){
+            @Override
+            public int compare(Integer i1, Integer i2) {
+                return i2-i1;
+            }
+        });
+    }
+    
+    public void addNum(int num) {
+        if(maxHeap.size()==minHeap.size()){
+            if(minHeap.size()==0){
+                maxHeap.add(num);
+            }else if(num>minHeap.peek()){
+                minHeap.add(num);
+            }else{
+                maxHeap.add(num);
+            }
+        }else if(maxHeap.size()>minHeap.size()){
+            if(num<maxHeap.peek()){
+                int temp=maxHeap.poll();
+                maxHeap.add(num);
+                minHeap.add(temp);
+            }else{
+                minHeap.add(num);
+            }
+        }else{
+            if(num>minHeap.peek()){
+                int temp=minHeap.poll();
+                minHeap.add(num);
+                maxHeap.add(temp);
+            }else{
+                maxHeap.add(num);
+            }
+        }
+    }
+    
+    public double findMedian() {
+        if(maxHeap.size()==minHeap.size()){
+            return ((double)maxHeap.peek()+(double)minHeap.peek())/2;
+        }else if(maxHeap.size()>minHeap.size()){
+            return maxHeap.peek();
+        }else{
+            return minHeap.peek();
+        }
+    }
+}
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder obj = new MedianFinder();
+ * obj.addNum(num);
+ * double param_2 = obj.findMedian();
+ */
