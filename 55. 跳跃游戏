@@ -1,0 +1,22 @@
+//从后向前扫描，满足条件的结点记为x，最后判断x是否为0；
+class Solution {
+    public boolean canJump(int[] nums) {
+        if(nums.length==0){
+            return false;
+        }
+        if(nums.length==1){
+            return true;
+        }
+        int x=nums.length-1;
+        for(int i=nums.length-2;i>=0;i--){
+            if(nums[i]>=x-i){
+                x=i;
+            }
+        }
+        if(x==0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
