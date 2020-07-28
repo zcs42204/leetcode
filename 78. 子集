@@ -1,0 +1,23 @@
+class Solution {
+    List<List<Integer>> res=new LinkedList<List<Integer>>();
+    int k,n;
+    public void backtrouce(int start,LinkedList<Integer> list,int[] nums){
+        if (list.size() == k){
+            res.add(new LinkedList(list));
+        }
+        for(int i=start;i<n;i++){
+            list.add(nums[i]);
+            backtrouce(i+1,list,nums);
+            list.remove(list.size()-1);
+        }
+    }
+
+    public List<List<Integer>> subsets(int[] nums) {
+        n=nums.length;
+        //子集里有k个元素，k从0到n
+        for(k=0;k<n+1;k++){
+            backtrouce(0,new LinkedList<Integer>(),nums);
+        }
+        return res;
+    }
+}
