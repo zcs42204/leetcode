@@ -1,0 +1,27 @@
+//维护一个dp二维数组，dp[i][j]为到达该点的最小路径和
+class Solution {
+    public int minPathSum(int[][] grid) {
+        int[][] res=new int[grid.length][grid[0].length];
+        res[0][0]=grid[0][0];
+        int i=1;
+        int j=1;
+        while(i<grid.length){
+            res[i][0]=res[i-1][0]+grid[i][0];
+            i++;
+        }
+        while(j<grid[0].length){
+            res[0][j]=res[0][j-1]+grid[0][j];
+            j++;
+        }
+        i=1;
+        while(i<grid.length){
+            j=1;
+            while(j<grid[0].length){
+                res[i][j]=Math.min(res[i-1][j],res[i][j-1])+grid[i][j];
+                j++;
+            }
+            i++;
+        }
+        return res[grid.length-1][grid[0].length-1];
+    }
+}
